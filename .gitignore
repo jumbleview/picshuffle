@@ -12,6 +12,11 @@
 
 *.db
 
+# Image file
+*.bmp
+*.jpeg
+*.jpg
+
 # Test binary, built with `go test -c`
 *.test
 
