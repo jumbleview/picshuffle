@@ -12,7 +12,7 @@
 
 *.db
 
-# Image file
+# Image files
 *.bmp
 *.jpeg
 *.jpg

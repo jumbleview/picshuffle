@@ -11,9 +11,7 @@ import (
 
 const DBName = "picshuffle.db"
 
-// GetImageName  returns random image file name and update database for next
-//
-//	usage
+// GetImageName  returns random image file name and update database for next usage
 func GetImageName(execPath, folder string, jpgs []string) (string, bool) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	i := r.Intn(len(jpgs))
