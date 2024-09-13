@@ -21,13 +21,21 @@ func main() {
 	if !isSilent || isLogPrintMode {
 		screen.MakeConsole()
 	}
+	greeting := "picshuffle.exe [-s] [-l] path_to_jpeg_folder_or_file"
+	var Usage = func() {
+		fmt.Println(greeting)
+	}
 	ex, err := os.Executable()
 	if err != nil {
 		panic(err)
 	}
 	execPath := filepath.Dir(ex)
 	if len(cmd) != 1 {
-		fmt.Printf("...")
+		fmt.Printf("Wrong number of arguments %d\n", len(cmd))
+		Usage()
+		fmt.Printf("Hit \"Enter\" to exit... ")
+		s := ""
+		fmt.Scanln(&s)
 		os.Exit(1)
 	}
 	if isLogPrintMode {

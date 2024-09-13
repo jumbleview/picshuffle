@@ -16,7 +16,6 @@ func GetImageName(execPath, folder string, jpgs []string) (string, bool) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	i := r.Intn(len(jpgs))
 	rs := jpgs[i]
-	fmt.Printf("Initially selected %s out of %d images\n", rs, len(jpgs))
 	baseName := filepath.Join(execPath, DBName)
 	db, err := bolt.Open(baseName, 0600, nil)
 	if err != nil {
@@ -43,6 +42,7 @@ func GetImageName(execPath, folder string, jpgs []string) (string, bool) {
 	})
 
 	if len(candidates) == 0 { // all files used. clear bucket for next usage
+		fmt.Printf("Initially selected %s out of %d images\n", rs, len(jpgs))
 		err = db.Update(func(tx *bolt.Tx) error {
 			tx.DeleteBucket([]byte(folder))
 			_, err := tx.CreateBucket([]byte(folder))
@@ -108,8 +108,11 @@ func PrintLog(execPath string) {
 			return nil
 		}
 		c := b.Cursor()
+		i := 0
+		fmt.Printf("List of used pictures\n")
 		for k, v := c.First(); k != nil; k, v = c.Next() {
-			fmt.Printf("%s: %s\n", k, v)
+			i++
+			fmt.Printf("%03d %s: %s\n", i, k, v)
 		}
 		return nil
 	})
