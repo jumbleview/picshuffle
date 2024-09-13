@@ -13,12 +13,12 @@ import (
 func main() {
 	var isSilent bool
 	flag.BoolVar(&isSilent, "s", false, "silent mode")
-	var mustPrintHistory bool
-	flag.BoolVar(&mustPrintHistory, "l", false, "print history (log)")
+	var isLogPrintMode bool
+	flag.BoolVar(&isLogPrintMode, "l", false, "print history (log)")
 	flag.Parse()
 	cmd := flag.Args()
 
-	if !isSilent || mustPrintHistory {
+	if !isSilent || isLogPrintMode {
 		screen.MakeConsole()
 	}
 	ex, err := os.Executable()
@@ -30,7 +30,7 @@ func main() {
 		fmt.Printf("...")
 		os.Exit(1)
 	}
-	if mustPrintHistory {
+	if isLogPrintMode {
 		PrintLog(execPath)
 	} else {
 		if name, err := ChooseFile(execPath, cmd[0]); err == nil {
